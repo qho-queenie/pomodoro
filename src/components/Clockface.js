@@ -1,41 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import cx from 'classnames';
+import classnames from 'classnames';
 
 const ClockFace = () => {
-  const [mainTimer, setMainTimer] = useState(10000);
+  const [mainTimerMins, setMainTimerMins] = useState(2);
+  const [mainTimerSecs, setMainTimerSecs] = useState(0)
   const [isActive, setIsActive] = useState(false);
 
-  // const toggleisActive = () => {
-  //   setIsActive(prevState => !isActive)
-  // }
 
   useEffect(() => {
-    let intervalId;
-    if (isActive && mainTimer > 0) {
-      intervalId = setInterval(() => {
-        setMainTimer(prev => prev - 5000);
-      }, 3000);
+    let mainTimeInterval;
+    if (isActive) {
+      mainTimeInterval = setInterval(() => {
+        // if there are seconds left
+        if (mainTimerSecs > 0) {
+          setMainTimerSecs(mainTimerSecs - 1);
+        }
+        // if there are no seconds and mins left
+        if (mainTimerSecs === 0) {
+          if (mainTimerMins === 0) {
+            clearInterval(mainTimeInterval)
+            // if seconds are at 0, but there are mins left
+          } else {
 
-    } else if (mainTimer < 1) {
-      alert('time is up');
-      clearInterval(intervalId)
-
-    } else if (!isActive) {
-      clearInterval(intervalId)
+            setMainTimerMins(mainTimerMins - 1);
+            setMainTimerSecs(59);
+          }
+        }
+      }, 1000)
     }
+    else if (!isActive) {
+      clearInterval(mainTimeInterval)
+    }
+    return () => clearInterval(mainTimeInterval)
+  }, [isActive, mainTimerSecs]);
 
 
-    return () => clearInterval(intervalId)
 
-  }, [isActive]);
+  useEffect(() => {
+    if (mainTimerSecs === 0 && mainTimerMins === 0) setIsActive(false)
+  }, [mainTimerSecs])
 
   return (
     <div classnames='Clockface'>
 
       <p>Pomodoro</p>
-      <h1>{mainTimer}</h1>
+      <h1>00 : {mainTimerMins < 10 ? `0${mainTimerMins}` : mainTimerMins} : {mainTimerSecs < 10 ? `0${mainTimerSecs}` : mainTimerSecs} </h1>
       <button
-        className={cx('startButton', { isActive })}
+        className={classnames('startButton', { isActive })}
+
         type='button'
         onClick={() => setIsActive(!isActive)}
       >
