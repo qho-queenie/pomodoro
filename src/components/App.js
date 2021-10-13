@@ -1,12 +1,12 @@
 import React from 'react'
-import ClockFace from './Clockface';
+import TimerDisplay from './TimerDisplay';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <ClockFace />
+        <TimerDisplay />
       </header>
     </div>
   );
