@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import classnames from 'classnames';
 
-const TimerPanel = ({ numberOfMinutes, numberOfSeconds, sessionNumber, markCompletedSession }) => {
+const TimerPanel = ({ numberOfMinutes, numberOfSeconds, sessionNumber, markSessionAsComplete }) => {
   // belows are local states(to this file), will only be used here, not global
   const [minutes, setMinutes] = useState(numberOfMinutes);
   const [seconds, setSeconds] = useState(numberOfSeconds);
 
+  // the 1st session never starts on its own
+  // if its is the end of all sessions, we go back to display the 1st session, without auto-starting
   const checkIfLastSession = () => {
     return sessionNumber > 0 ? true : false;
   }
@@ -42,15 +44,17 @@ const TimerPanel = ({ numberOfMinutes, numberOfSeconds, sessionNumber, markCompl
 
   useEffect(() => {
     // session is complete, not paused
-    if (!isActive && minutes === 0 && seconds === 0) markCompletedSession();
+    if (!isActive && minutes === 0 && seconds === 0) markSessionAsComplete();
   }, [isActive]);
 
   return (
-    <div classnames='TimerPanel'>
-      <h1>00 : {minutes < 10 ? `0${minutes}` : minutes} : {seconds < 10 ? `0${seconds}` : seconds} </h1>
+    <div className='TimerPanel'>
+      <div className={'TimerPanel__countDown'}>
+        <h1>00 : {minutes < 10 ? `0${minutes}` : minutes} : {seconds < 10 ? `0${seconds}` : seconds} </h1>
+      </div>
       <div className={classnames('TimerPanel__clockControls', { isActive })}>
         <button
-          className={'TimerPanel__startButton'}
+          className={'startButton'}
           type='button'
           onClick={() => setIsActive(!isActive)}
         >
