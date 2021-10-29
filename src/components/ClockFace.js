@@ -1,37 +1,87 @@
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import TimerPanel from './TimerPanel';
+import React, { useState, useEffect } from 'react';
+import classnames from 'classnames';
+import SettingsModal from './SettingsModal';
 
 const ClockFace = () => {
-  // currentSession is the index of the allSessions array
-  const [currentSession, setCurrentSession] = useState(0);
-  // AllSession's structure: [[min, sec], [min, sec], [min, sec], [min, sec]]
-  // these will be set by the user
-  const [allSessions, setAllSessions] = useState([[0, 10], [1, 0], [0, 20], [0, 30]]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [currentSessionIndex, setCurrentSessionIndex] = useState(0);
+  // in seconds
+  const [sessions, setSessions] = useState([60, 5, 10, 10]);
+  const [currentSeconds, setCurrentSeconds] = useState(sessions[currentSessionIndex]);
 
-  const handleNextSession = () => {
-    if (allSessions.length - 1 === currentSession) {
-      // this is the last session, so go back to display the first session, without auto starting
-      setCurrentSession(0)
-    } else {
-      setCurrentSession(currentSession + 1)
+  useEffect(() => {
+    let timeInterval;
+    if (isActive) {
+      timeInterval = setInterval(() => {
+        if (currentSeconds > 0) {
+          setCurrentSeconds(currentSeconds - 1);
+        } else {
+          setIsActive(false);
+          clearInterval(timeInterval);
+        }
+      }, 1000)
     }
-  }
+    else if (!isActive) {
+      clearInterval(timeInterval)
+    }
+    return () => clearInterval(timeInterval)
+  }, [isActive, currentSeconds]);
+
+  useEffect(() => {
+    if (isActive && currentSeconds === 0) {
+      setCurrentSessionIndex(currentSessionIndex + 1);
+    }
+    else if (currentSessionIndex === sessions.length) {
+      setCurrentSessionIndex(0);
+      setIsActive(false)
+    }
+  }, [currentSeconds, isActive])
+
+  useEffect(() => {
+    setCurrentSeconds(sessions[currentSessionIndex])
+  }, [currentSessionIndex])
+
+  useEffect(() => {
+    if (isModalOpen === true) {
+      setIsActive(false);
+    }
+  }, [isModalOpen])
 
   return (
     <div className='ClockFace'>
       <div className='ClockFace__info'>
         <h3>I am a Pomodoro Timer</h3>
-        <h4>Session {currentSession + 1} out of {allSessions.length}</h4>
-        <h4>current timer length: {allSessions[currentSession][0]} mins and {allSessions[currentSession][1]} seconds</h4>
+        <h4>Current Session: {currentSessionIndex + 1}</h4>
+        <h4
+          className={classnames('timer', { isActive })}
+        >
+          00 :
+          {Math.floor(currentSeconds / 60) < 10 ? `0${Math.floor(currentSeconds / 60)}` : Math.floor(currentSeconds / 60)} :
+          {currentSeconds % 60 < 10 ? `0${currentSeconds % 60}` : currentSeconds % 60}</h4>
       </div>
-      <TimerPanel
-        key={uuidv4()}
-        numberOfMinutes={allSessions[currentSession][0]}
-        numberOfSeconds={allSessions[currentSession][1]}
-        sessionNumber={currentSession}
-        markSessionAsComplete={handleNextSession}
-      />
+
+      <div className='ClockFace__controls'>
+        <button
+          className={'start-button'}
+          onClick={() => setIsActive(!isActive)}
+        >
+          {isActive ? 'pause' : 'start'}
+        </button>
+
+        <button
+          className={'open-settings'}
+          onClick={() => setIsModalOpen(true)}
+        >
+          open settings
+        </button>
+
+        <SettingsModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        >
+        </SettingsModal>
+      </div>
     </div>
   )
 }
