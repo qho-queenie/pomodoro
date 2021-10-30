@@ -1,8 +1,11 @@
-import React from "react"
+import React, { useContext } from "react";
 import reactDom from "react-dom";
 import "./SettingsModal.scss";
+import { Context } from './ClockFace.js'
 
-const SettingsModal = ({ isOpen, onClose }) => {
+
+const SettingsModal = () => {
+  const { isOpen, sessionLengths, setSessions, setIsModalOpen } = useContext(Context);
   if (!isOpen) {
     return null;
   }
@@ -11,9 +14,10 @@ const SettingsModal = ({ isOpen, onClose }) => {
     <div className="SettingsModal__overlay">
       <div className="SettingsModal">
         <h3>Settings</h3>
+        <span>value : {sessionLengths}</span>
         <button
           className="close-button"
-          onClick={onClose}
+          onClick={() => setIsModalOpen(false)}
         >
           Apply Settings
         </button>

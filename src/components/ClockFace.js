@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import classnames from "classnames";
 import SettingsModal from "./SettingsModal";
 
 // variables outside components are the ones that don"t change, or as helper functions exposure
 // in seconds
+export const Context = createContext();
 const session_lengths = [65, 5, 10, 10];
 
 const ClockFace = () => {
@@ -80,11 +81,9 @@ const ClockFace = () => {
           open settings
         </button>
 
-        <SettingsModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        >
-        </SettingsModal>
+        <Context.Provider value={{ isOpen: isModalOpen, sessionLengths: session_lengths, setSessions: setSessions, setIsModalOpen: setIsModalOpen }}>
+          <SettingsModal />
+        </Context.Provider>
       </div>
     </div>
   )
