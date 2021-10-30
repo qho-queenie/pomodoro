@@ -1,6 +1,6 @@
-import React from 'react'
-import reactDom from 'react-dom';
-import './SettingsModal.scss';
+import React from "react"
+import reactDom from "react-dom";
+import "./SettingsModal.scss";
 
 const SettingsModal = ({ isOpen, onClose }) => {
   if (!isOpen) {
@@ -8,11 +8,11 @@ const SettingsModal = ({ isOpen, onClose }) => {
   }
 
   return reactDom.createPortal(
-    <div className={'SettingsModal__overlay'}>
-      <div className={'SettingsModal'}>
+    <div className="SettingsModal__overlay">
+      <div className="SettingsModal">
         <h3>Settings</h3>
         <button
-          className={'close-button'}
+          className="close-button"
           onClick={onClose}
         >
           Apply Settings
@@ -20,7 +20,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
       </div>
     </div>,
 
-    document.getElementById('portal')
+    document.getElementById("portal")
   )
 }
 
