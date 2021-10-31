@@ -5,14 +5,20 @@ import SettingsModal from "./SettingsModal";
 // variables outside components are the ones that don"t change, or as helper functions exposure
 // in seconds
 export const Context = createContext();
-const session_lengths = [65, 5, 10, 10];
+// const session_lengths = [65, 5];
 
 const ClockFace = () => {
-  const [sessions, setSessions] = useState(session_lengths);
+  const [sessions, setSessions] = useState([65, 5]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [currentSessionIndex, setCurrentSessionIndex] = useState(0);
   const [currentSeconds, setCurrentSeconds] = useState(sessions[0]);
+
+  // can use useMemo to save some re-renders
+  const settingsModalValues = {
+    isModalOpen: [isModalOpen, setIsModalOpen],
+    sessions: [sessions, setSessions]
+  };
 
   useEffect(() => {
     let timeInterval;
@@ -41,13 +47,18 @@ const ClockFace = () => {
 
   useEffect(() => {
     setCurrentSeconds(sessions[currentSessionIndex])
-  }, [currentSessionIndex])
+  }, [currentSessionIndex]);
+
+  useEffect(() => {
+    // whenever sessions has been changed by user, start with 1st session
+    setCurrentSeconds(sessions[0])
+  }, [sessions]);
 
   useEffect(() => {
     if (isModalOpen === true) {
       setIsActive(false);
     }
-  }, [isModalOpen])
+  }, [isModalOpen]);
 
   const formattedMinutes = Math.floor(currentSeconds / 60) < 10 ? `0${Math.floor(currentSeconds / 60)}` : Math.floor(currentSeconds / 60);
   const formattedSeconds = currentSeconds % 60 < 10 ? `0${currentSeconds % 60}` : currentSeconds % 60
@@ -81,7 +92,7 @@ const ClockFace = () => {
           open settings
         </button>
 
-        <Context.Provider value={{ isOpen: isModalOpen, sessionLengths: session_lengths, setSessions: setSessions, setIsModalOpen: setIsModalOpen }}>
+        <Context.Provider value={settingsModalValues}>
           <SettingsModal />
         </Context.Provider>
       </div>
