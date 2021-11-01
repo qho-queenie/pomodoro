@@ -3,9 +3,8 @@ import classnames from "classnames";
 import SettingsModal from "./SettingsModal";
 
 // variables outside components are the ones that don"t change, or as helper functions exposure
-// in seconds
-export const Context = createContext();
-// const session_lengths = [65, 5];
+
+export const ModalContext = createContext();
 
 const ClockFace = () => {
   const [sessions, setSessions] = useState([65, 5]);
@@ -14,11 +13,9 @@ const ClockFace = () => {
   const [currentSessionIndex, setCurrentSessionIndex] = useState(0);
   const [currentSeconds, setCurrentSeconds] = useState(sessions[0]);
 
-  // can use useMemo to save some re-renders
   const settingsModalValues = {
-    isModalOpen: [isModalOpen, setIsModalOpen],
-    sessions: [sessions, setSessions]
-  };
+    isModalOpen, setIsModalOpen, sessions, setSessions
+  }
 
   useEffect(() => {
     let timeInterval;
@@ -57,6 +54,7 @@ const ClockFace = () => {
   useEffect(() => {
     if (isModalOpen === true) {
       setIsActive(false);
+
     }
   }, [isModalOpen]);
 
@@ -92,9 +90,9 @@ const ClockFace = () => {
           open settings
         </button>
 
-        <Context.Provider value={settingsModalValues}>
+        <ModalContext.Provider value={settingsModalValues}>
           <SettingsModal />
-        </Context.Provider>
+        </ModalContext.Provider>
       </div>
     </div>
   )

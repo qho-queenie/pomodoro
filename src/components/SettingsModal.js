@@ -1,17 +1,23 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import reactDom from "react-dom";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import "./SettingsModal.scss";
-import { Context } from './ClockFace.js'
+import { ModalContext } from "./ClockFace.js"
 
 
 const SettingsModal = () => {
-  const { isModalOpen, sessions } = useContext(Context);
-  const [thisModalOpen, setThisModalOpen] = isModalOpen;
-  const [currentSessions, setCurrentSessions] = sessions;
-  const [localSession, setLocalSession] = useState(currentSessions);
+  const { isModalOpen, setIsModalOpen, sessions, setSessions } = useContext(ModalContext);
+  // const [mainSessions, setMainSessions] = useState(sessions);
+  const [localSession, setLocalSession] = useState(sessions);
 
-  if (!thisModalOpen) {
+  useEffect(() => {
+    if (isModalOpen) {
+      setLocalSession(sessions);
+    }
+
+  }, [isModalOpen])
+
+  if (!isModalOpen) {
     return null;
   }
 
@@ -36,8 +42,8 @@ const SettingsModal = () => {
           <input
             key={uuidv4()}
             type="number"
-            max='60'
-            min='0'
+            max="60"
+            min="0"
             name="longSession"
             value={localSession[0]}
             onChange={e => handleInputChange(e)}
@@ -46,8 +52,8 @@ const SettingsModal = () => {
           <input
             key={uuidv4()}
             type="number"
-            max='60'
-            min='0'
+            max="60"
+            min="0"
             name="shortSession"
             value={localSession[1]}
             onChange={e => handleInputChange(e)}
@@ -56,14 +62,14 @@ const SettingsModal = () => {
 
           <button
             className="applySettings-button"
-            onClick={() => setCurrentSessions(localSession)}
+            onClick={() => setSessions(localSession)}
           >
             Apply Settings
           </button>
 
           <button
             className="close-button"
-            onClick={() => setThisModalOpen(false)}
+            onClick={() => setIsModalOpen(false)}
           >
             Close
           </button>
