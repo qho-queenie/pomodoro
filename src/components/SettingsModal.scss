@@ -2,16 +2,39 @@
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 15%;
-  width: 450px;
-  height: 300px;
-  background-color: #009879;
+  margin-top: 18%;
+  width: 305px;
+  height: 200px;
+  background-color:#ff6347;
   border-radius: 10px;
+  padding: 15px;
+  color: white;
 
-  .close-button {
-    width: 25%;
-    margin-left: auto;
-    margin-right: auto;
+  h2 {
+    width: 40%;
+    height: 20%;
+    margin: 0 auto 0 auto;
+  }
+
+  &__form {
+    line-height: 1.5em;
+    padding: 17px;
+    font-size: 22px;
+
+    input {
+      width: 20%;
+      margin: 5px;
+    }
+  }
+
+  &__modal-controls {
+    margin-top: 20px;
+
+    .apply-close-button {
+      &.hasSettingsChanged {
+        background-color: #ff6347;
+      }
+    }
   }
 
   &__overlay {
@@ -21,6 +44,5 @@
     left: 0;
     right: 0;
     background-color: rgba(192, 192, 192, 0.7);
-    z-index: 1000;
   }
 }

@@ -1,13 +1,12 @@
 import React, { useState, useEffect, createContext } from "react";
 import classnames from "classnames";
 import SettingsModal from "./SettingsModal";
-
-// variables outside components are the ones that don"t change, or as helper functions exposure
+import "./ClockFace.scss";
 
 export const ModalContext = createContext();
 
 const ClockFace = () => {
-  const [sessions, setSessions] = useState([65, 5]);
+  const [sessions, setSessions] = useState([1500, 300, 1500, 300]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [currentSessionIndex, setCurrentSessionIndex] = useState(0);
@@ -24,15 +23,13 @@ const ClockFace = () => {
         if (currentSeconds > 0) {
           setCurrentSeconds(currentSeconds - 1);
         } else if (currentSeconds === 0) {
-          // current session complete: 
-          // last session, set back to 1st session
           if (currentSessionIndex + 1 === sessions.length) {
             setCurrentSessionIndex(0);
             setIsActive(false);
           } else {
-            // moving to the next session
             setCurrentSessionIndex(currentSessionIndex + 1);
           }
+          setCurrentSeconds(sessions[currentSessionIndex])
           clearInterval(timeInterval);
         }
       }, 1000)
@@ -40,26 +37,25 @@ const ClockFace = () => {
       clearInterval(timeInterval)
     }
     return () => clearInterval(timeInterval)
-  }, [isActive, currentSeconds]);
+  }, [isActive, currentSeconds, currentSessionIndex, sessions]);
 
   useEffect(() => {
     setCurrentSeconds(sessions[currentSessionIndex])
-  }, [currentSessionIndex]);
+  }, [sessions, currentSessionIndex]);
 
   useEffect(() => {
-    // whenever sessions has been changed by user, start with 1st session
+    setCurrentSessionIndex(0)
     setCurrentSeconds(sessions[0])
   }, [sessions]);
 
   useEffect(() => {
     if (isModalOpen === true) {
       setIsActive(false);
-
     }
   }, [isModalOpen]);
 
-  const formattedMinutes = Math.floor(currentSeconds / 60) < 10 ? `0${Math.floor(currentSeconds / 60)}` : Math.floor(currentSeconds / 60);
-  const formattedSeconds = currentSeconds % 60 < 10 ? `0${currentSeconds % 60}` : currentSeconds % 60
+  const formattedMinutes = Math.floor(currentSeconds / 60);
+  const formattedSeconds = currentSeconds % 60;
 
   return (
     <div className="ClockFace">
@@ -70,21 +66,21 @@ const ClockFace = () => {
           className={classnames("timer", { isActive })}
         >
           00 :
-          {formattedMinutes} :
-          {formattedSeconds}
+          {formattedMinutes < 10 ? `0${formattedMinutes}` : formattedMinutes} :
+          {formattedSeconds < 10 ? `0${formattedSeconds}` : formattedSeconds}
         </h4>
       </div>
 
       <div className="ClockFace__controls">
         <button
-          className="start-button"
+          className={classnames("ClockFace__start-button", { isActive })}
           onClick={() => setIsActive(!isActive)}
         >
           {isActive ? "pause" : "start"}
         </button>
 
         <button
-          className="open-settings"
+          className="ClockFace__open-settings-button"
           onClick={() => setIsModalOpen(true)}
         >
           open settings
