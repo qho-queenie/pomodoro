@@ -7,12 +7,12 @@ import "./SettingsModal.scss";
 
 const SettingsModal = () => {
   const { isModalOpen, setIsModalOpen, sessions, setSessions } = useContext(ModalContext);
-  const [localSession, setLocalSession] = useState(sessions);
+  const [localSessions, setLocalSessions] = useState(sessions);
   const [hasSettingsChanged, setHasSettingsChanged] = useState(false);
 
   useEffect(() => {
     if (isModalOpen) {
-      setLocalSession(sessions);
+      setLocalSessions(sessions);
       setHasSettingsChanged(false);
     }
   }, [isModalOpen, sessions])
@@ -22,7 +22,7 @@ const SettingsModal = () => {
   }
 
   const applyAndClose = () => {
-    setSessions(localSession)
+    setSessions(localSessions)
     setIsModalOpen(false);
   }
 
@@ -33,16 +33,16 @@ const SettingsModal = () => {
     else {
       setHasSettingsChanged(true);
       if (e.target.name === "longSession") {
-        const newSettings = [...localSession];
+        const newSettings = [...localSessions];
         newSettings[0] = e.target.valueAsNumber * 60;
         newSettings[2] = e.target.valueAsNumber * 60;
-        setLocalSession(newSettings);
+        setLocalSessions(newSettings);
       }
       else if (e.target.name === "shortSession") {
-        const newSettings = [...localSession];
+        const newSettings = [...localSessions];
         newSettings[1] = e.target.valueAsNumber * 60;
         newSettings[3] = e.target.valueAsNumber * 60;
-        setLocalSession(newSettings);
+        setLocalSessions(newSettings);
       }
     }
   }
@@ -65,7 +65,7 @@ const SettingsModal = () => {
             max="60"
             min="1"
             name="longSession"
-            value={formatToMinutes(localSession[0])}
+            value={formatToMinutes(localSessions[0])}
             onChange={e => handleInputChange(e)}
           >
           </input>
@@ -78,7 +78,7 @@ const SettingsModal = () => {
             max="60"
             min="1"
             name="shortSession"
-            value={formatToMinutes(localSession[1])}
+            value={formatToMinutes(localSessions[1])}
             onChange={e => handleInputChange(e)}
           >
           </input>
