@@ -1,7 +1,7 @@
-import React, { useState, useEffect, createContext } from "react";
-import classnames from "classnames";
-import SettingsModal from "./SettingsModal";
-import "./ClockFace.scss";
+import React, {useState, useEffect, createContext} from 'react';
+import classnames from 'classnames';
+import SettingsModal from './SettingsModal';
+import './ClockFace.scss';
 
 export const ModalContext = createContext();
 
@@ -13,8 +13,8 @@ const ClockFace = () => {
   const [currentSeconds, setCurrentSeconds] = useState(sessions[0]);
 
   const settingsModalValues = {
-    isModalOpen, setIsModalOpen, sessions, setSessions
-  }
+    isModalOpen, setIsModalOpen, sessions, setSessions,
+  };
 
   useEffect(() => {
     let timeInterval;
@@ -29,23 +29,23 @@ const ClockFace = () => {
           } else {
             setCurrentSessionIndex(currentSessionIndex + 1);
           }
-          setCurrentSeconds(sessions[currentSessionIndex])
+          setCurrentSeconds(sessions[currentSessionIndex]);
           clearInterval(timeInterval);
         }
-      }, 1000)
+      }, 1000);
     } else if (!isActive) {
-      clearInterval(timeInterval)
+      clearInterval(timeInterval);
     }
-    return () => clearInterval(timeInterval)
+    return () => clearInterval(timeInterval);
   }, [isActive, currentSeconds, currentSessionIndex, sessions]);
 
   useEffect(() => {
-    setCurrentSeconds(sessions[currentSessionIndex])
+    setCurrentSeconds(sessions[currentSessionIndex]);
   }, [sessions, currentSessionIndex]);
 
   useEffect(() => {
-    setCurrentSessionIndex(0)
-    setCurrentSeconds(sessions[0])
+    setCurrentSessionIndex(0);
+    setCurrentSeconds(sessions[0]);
   }, [sessions]);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const ClockFace = () => {
         <h3>I am a Pomodoro Timer</h3>
         <h4>Current Session: {currentSessionIndex + 1}</h4>
         <h4
-          className={classnames("timer", { isActive })}
+          className={classnames('ClockFace__timer', {isActive})}
         >
           00 :
           {formattedMinutes < 10 ? `0${formattedMinutes}` : formattedMinutes} :
@@ -73,10 +73,10 @@ const ClockFace = () => {
 
       <div className="ClockFace__controls">
         <button
-          className={classnames("ClockFace__start-button", { isActive })}
+          className={classnames('ClockFace__start-button', {isActive})}
           onClick={() => setIsActive(!isActive)}
         >
-          {isActive ? "pause" : "start"}
+          {isActive ? 'pause' : 'start'}
         </button>
 
         <button
@@ -91,7 +91,7 @@ const ClockFace = () => {
         </ModalContext.Provider>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ClockFace;
