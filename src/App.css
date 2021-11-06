@@ -2,6 +2,18 @@
   text-align: center;
 }
 
+button {
+  cursor: pointer;
+  width: 40%;
+  margin: 10px;
+  border-radius: 25px;
+  border: solid white;
+  font-size: 14px;
+  color: white;
+  line-height: 20px;
+  background-color: #33a925;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

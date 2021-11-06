@@ -1,0 +1,7 @@
+.ClockFace {
+  &__start-button {
+    &.isActive {
+      background-color: #ff6347;
+    }
+  }
+}
