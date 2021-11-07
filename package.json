@@ -18,22 +18,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.js src/**/*.jsx"
+    "lint": "eslint 'src/**/*.js'",
+    "lint-fix": "npm run lint -- --fix"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "google"
-    ],
-    "rules": {
-      "jsx-quotes": [
-        "error",
-        "prefer-double"
-      ]
-    }
+    "extends": []
   },
   "browserslist": {
     "production": [
@@ -50,6 +39,7 @@
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-react": "^7.26.1"
   }
 }
