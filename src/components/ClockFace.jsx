@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { CircularProgressBar } from './CircularProgressBar';
 import './ClockFace.scss';
 
 export const ModalContext = createContext();
@@ -11,6 +12,9 @@ const ClockFace = (props) => {
   const [isActive, setIsActive] = useState(false);
   const [currentSessionIndex, setCurrentSessionIndex] = useState(0);
   const [currentSeconds, setCurrentSeconds] = useState(sessions[0]);
+
+  const [totalSeconds, setTotalSeconds] = useState(currentSeconds);
+  const progress = (currentSeconds / totalSeconds) * 100;
 
   const { children } = props;
 
@@ -46,6 +50,10 @@ const ClockFace = (props) => {
   }, [sessions, currentSessionIndex]);
 
   useEffect(() => {
+    setTotalSeconds(sessions[currentSessionIndex]);
+  }, [currentSessionIndex, sessions, currentSeconds]);
+
+  useEffect(() => {
     setCurrentSessionIndex(0);
     setCurrentSeconds(sessions[0]);
   }, [sessions]);
@@ -67,6 +75,12 @@ const ClockFace = (props) => {
           Current Session:
           {currentSessionIndex + 1}
         </h4>
+        <CircularProgressBar
+          className="sessionProgressBar"
+          radius={200}
+          stroke={15}
+          progress={progress}
+        />
         <h4
           className={classnames('ClockFace__timer', { isActive })}
         >
