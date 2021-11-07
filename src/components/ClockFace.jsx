@@ -1,11 +1,10 @@
-import React, {useState, useEffect, createContext} from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import classnames from 'classnames';
-import SettingsModal from './SettingsModal';
 import './ClockFace.scss';
 
 export const ModalContext = createContext();
 
-const ClockFace = () => {
+const ClockFace = (props) => {
   const [sessions, setSessions] = useState([1500, 300, 1500, 300]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -56,39 +55,50 @@ const ClockFace = () => {
 
   const formattedMinutes = Math.floor(currentSeconds / 60);
   const formattedSeconds = currentSeconds % 60;
+  // eslint-disable-next-line react/prop-types
+  const { children } = props;
 
   return (
     <div className="ClockFace">
       <div className="ClockFace__info">
         <h3>I am a Pomodoro Timer</h3>
-        <h4>Current Session: {currentSessionIndex + 1}</h4>
+        <h4>
+          Current Session:
+          {currentSessionIndex + 1}
+        </h4>
         <h4
-          className={classnames('ClockFace__timer', {isActive})}
+          className={classnames('ClockFace__timer', { isActive })}
         >
           00 :
-          {formattedMinutes < 10 ? `0${formattedMinutes}` : formattedMinutes} :
+          {formattedMinutes < 10 ? `0${formattedMinutes}` : formattedMinutes}
+          {' '}
+          :
           {formattedSeconds < 10 ? `0${formattedSeconds}` : formattedSeconds}
         </h4>
       </div>
 
       <div className="ClockFace__controls">
         <button
-          className={classnames('ClockFace__start-button', {isActive})}
+          type="button"
+          className={classnames('ClockFace__start-button', { isActive })}
           onClick={() => setIsActive(!isActive)}
         >
           {isActive ? 'pause' : 'start'}
         </button>
 
         <button
+          type="button"
           className="ClockFace__open-settings-button"
           onClick={() => setIsModalOpen(true)}
         >
           open settings
         </button>
 
-        <ModalContext.Provider value={settingsModalValues}>
-          <SettingsModal />
-        </ModalContext.Provider>
+        <div>
+          <ModalContext.Provider value={settingsModalValues}>
+            {children}
+          </ModalContext.Provider>
+        </div>
       </div>
     </div>
   );
