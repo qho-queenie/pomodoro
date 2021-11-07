@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './ClockFace.scss';
 
@@ -10,6 +11,8 @@ const ClockFace = (props) => {
   const [isActive, setIsActive] = useState(false);
   const [currentSessionIndex, setCurrentSessionIndex] = useState(0);
   const [currentSeconds, setCurrentSeconds] = useState(sessions[0]);
+
+  const { children } = props;
 
   const settingsModalValues = {
     isModalOpen, setIsModalOpen, sessions, setSessions,
@@ -55,8 +58,6 @@ const ClockFace = (props) => {
 
   const formattedMinutes = Math.floor(currentSeconds / 60);
   const formattedSeconds = currentSeconds % 60;
-  // eslint-disable-next-line react/prop-types
-  const { children } = props;
 
   return (
     <div className="ClockFace">
@@ -102,6 +103,10 @@ const ClockFace = (props) => {
       </div>
     </div>
   );
+};
+
+ClockFace.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default ClockFace;
