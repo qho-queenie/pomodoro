@@ -14,7 +14,7 @@ const ClockFace = (props) => {
   const [currentSeconds, setCurrentSeconds] = useState(sessions[0]);
 
   const [totalSeconds, setTotalSeconds] = useState(currentSeconds);
-  const progress = (currentSeconds / totalSeconds) * 100;
+  const timeProgress = (currentSeconds / totalSeconds) * 100;
 
   const { children } = props;
 
@@ -76,10 +76,10 @@ const ClockFace = (props) => {
           {currentSessionIndex + 1}
         </h4>
         <CircularProgressBar
-          className="sessionProgressBar"
-          radius={200}
-          stroke={15}
-          progress={progress}
+          name="CircularProgressBar__time-progress"
+          radius={170}
+          stroke={12}
+          progress={timeProgress}
         />
         <h4
           className={classnames('ClockFace__timer', { isActive })}

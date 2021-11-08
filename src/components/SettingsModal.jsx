@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { ModalContext } from './ClockFace';
 import './SettingsModal.scss';
 
@@ -100,6 +101,13 @@ const SettingsModal = () => {
       </div>
     </div>
   );
+};
+
+ModalContext.propTypes = {
+  isModalOpen: PropTypes.boolean,
+  setIsModalOpen: PropTypes.func.isRequired,
+  sessions: PropTypes.arrayOf(PropTypes.number).isRequired,
+  setSessions: PropTypes.func.isRequired,
 };
 
 export default SettingsModal;

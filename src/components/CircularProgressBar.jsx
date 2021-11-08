@@ -1,8 +1,10 @@
 import React from 'react';
-import './SettingsModal.scss';
+import PropTypes from 'prop-types';
+import './CircularProgressBar.scss';
 
 export const CircularProgressBar = (dialProps) => {
   const {
+    name,
     radius,
     stroke,
     progress,
@@ -14,12 +16,11 @@ export const CircularProgressBar = (dialProps) => {
 
   return (
     <svg
+      className={name}
       height={radius * 2}
       width={radius * 2}
     >
       <circle
-        stroke="tomato"
-        fill="transparent"
         strokeWidth={stroke}
         strokeDasharray={`${circumference} ${circumference}`}
         style={{ strokeDashoffset }}
@@ -29,6 +30,13 @@ export const CircularProgressBar = (dialProps) => {
       />
     </svg>
   );
+};
+
+CircularProgressBar.dialProps = {
+  name: PropTypes.string.isRequired,
+  radius: PropTypes.number.isRequired,
+  stroke: PropTypes.number.isRequired,
+  progress: PropTypes.number.isRequired,
 };
 
 export default CircularProgressBar;
