@@ -4,8 +4,12 @@ module.exports = {
     'es6': true,
   },
   'extends': [
+    'react-app',
+    'react-app/jest',
+    'eslint:recommended',
     'plugin:react/recommended',
-    'google',
+    'plugin:react-hooks/recommended',
+    'airbnb',
   ],
   'globals': {
     'Atomics': 'readonly',
@@ -20,7 +24,14 @@ module.exports = {
   },
   'plugins': [
     'react',
+    'react-hooks',
   ],
   'rules': {
   },
+  'settings': {
+    'react': {
+      'version': 'detect',
+    },
+  },
 };
+

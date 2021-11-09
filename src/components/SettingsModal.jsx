@@ -31,23 +31,22 @@ const SettingsModal = () => {
   };
 
   const handleInputChange = (e) => {
-    // if (e.target.valueAsNumber < 1 || e.target.valueAsNumber > 60 || !e.target.valueAsNumber) {
-    //   return null;
-    // }
-    if (e.target.valueAsNumber > 1 || e.target.valueAsNumber < 60 || e.target.valueAsNumber) {
-      setHasSettingsChanged(true);
-      if (e.target.name === 'longSession') {
-        const newSettings = [...localSessions];
-        newSettings[0] = e.target.valueAsNumber * 60;
-        newSettings[2] = e.target.valueAsNumber * 60;
-        setLocalSessions(newSettings);
-      } else if (e.target.name === 'shortSession') {
-        const newSettings = [...localSessions];
-        newSettings[1] = e.target.valueAsNumber * 60;
-        newSettings[3] = e.target.valueAsNumber * 60;
-        setLocalSessions(newSettings);
-      }
+    if (e.target.valueAsNumber < 1 || e.target.valueAsNumber > 60 || !e.target.valueAsNumber) {
+      return null;
     }
+    if (e.target.name === 'longSession') {
+      setHasSettingsChanged(true);
+      const newSettings = [...localSessions];
+      newSettings[0] = e.target.valueAsNumber * 60;
+      newSettings[2] = e.target.valueAsNumber * 60;
+      setLocalSessions(newSettings);
+    } else if (e.target.name === 'shortSession') {
+      const newSettings = [...localSessions];
+      newSettings[1] = e.target.valueAsNumber * 60;
+      newSettings[3] = e.target.valueAsNumber * 60;
+      setLocalSessions(newSettings);
+    }
+    return null;
   };
 
   const formatToMinutes = (seconds) => Math.floor(seconds / 60);

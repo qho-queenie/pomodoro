@@ -64,6 +64,7 @@ const ClockFace = (props) => {
     }
   }, [isModalOpen]);
 
+  const workOrBreak = (currentSessionIndex % 2) === 0 ? 'Pomodoro' : 'Break';
   const formattedMinutes = Math.floor(currentSeconds / 60);
   const formattedSeconds = currentSeconds % 60;
 
@@ -72,8 +73,7 @@ const ClockFace = (props) => {
       <div className="ClockFace__info">
         <h3>I am a Pomodoro Timer</h3>
         <h4>
-          Current Session:
-          {currentSessionIndex + 1}
+          {workOrBreak}
         </h4>
         <CircularProgressBar
           name="CircularProgressBar__time-progress"
