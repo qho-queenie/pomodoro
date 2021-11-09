@@ -1,5 +1,10 @@
 # Pomodoro Clock with customizable settings
 
+- start and pause on current timer
+- Settings for work and break duration
+
+![to do list](./src/images/1.png)
+![search by task name](./src/images/2.png)
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
