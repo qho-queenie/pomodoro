@@ -21,12 +21,12 @@ export const CircularProgressBar = (dialProps) => {
       width={radius * 2}
     >
       <circle
-        strokeWidth={stroke}
-        strokeDasharray={`${circumference} ${circumference}`}
-        style={{ strokeDashoffset }}
-        r={normalizedRadius}
         cx={radius}
         cy={radius}
+        r={normalizedRadius}
+        strokeDasharray={`${circumference} ${circumference}`}
+        strokeWidth={stroke}
+        style={{ strokeDashoffset }}
       />
     </svg>
   );

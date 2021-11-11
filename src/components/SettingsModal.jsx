@@ -59,10 +59,10 @@ const SettingsModal = () => {
           <label htmlFor="true">
             Work
             <input
-              type="number"
               max="60"
               min="1"
               name="longSession"
+              type="number"
               value={formatToMinutes(localSessions[0])}
               onChange={(e) => handleInputChange(e)}
             />
@@ -71,10 +71,10 @@ const SettingsModal = () => {
           <label htmlFor="true">
             Break:
             <input
-              type="number"
               max="60"
               min="1"
               name="shortSession"
+              type="number"
               value={formatToMinutes(localSessions[1])}
               onChange={(e) => handleInputChange(e)}
             />
@@ -83,15 +83,15 @@ const SettingsModal = () => {
 
         <div className="SettingsModal__modal-controls">
           <button
-            type="button"
             className={classnames('apply-close-button', { hasSettingsChanged })}
+            type="button"
             onClick={applyAndClose}
           >
             Apply Settings
           </button>
           <button
-            type="button"
             className="close-button"
+            type="button"
             onClick={() => setIsModalOpen(false)}
           >
             Close

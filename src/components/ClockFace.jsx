@@ -77,9 +77,9 @@ const ClockFace = (props) => {
         </h4>
         <CircularProgressBar
           name="CircularProgressBar__time-progress"
+          progress={timeProgress}
           radius={170}
           stroke={12}
-          progress={timeProgress}
         />
         <h4
           className={classnames('ClockFace__timer', { isActive })}
@@ -94,16 +94,16 @@ const ClockFace = (props) => {
 
       <div className="ClockFace__controls">
         <button
-          type="button"
           className={classnames('ClockFace__start-button', { isActive })}
+          type="button"
           onClick={() => setIsActive(!isActive)}
         >
           {isActive ? 'pause' : 'start'}
         </button>
 
         <button
-          type="button"
           className="ClockFace__open-settings-button"
+          type="button"
           onClick={() => setIsModalOpen(true)}
         >
           open settings
