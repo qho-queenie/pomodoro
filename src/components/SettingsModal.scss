@@ -1,25 +1,25 @@
 .SettingsModal {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 18%;
   width: 305px;
   height: 200px;
-  background-color:#ff6347;
-  border-radius: 10px;
   padding: 15px;
+  margin-top: 18%;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #ff6347;
+  border-radius: 10px;
   color: white;
+  text-align: center;
 
   h2 {
     width: 40%;
     height: 20%;
-    margin: 0 auto 0 auto;
+    margin: 0 auto;
   }
 
   &__form {
-    line-height: 1.5em;
     padding: 17px;
     font-size: 22px;
+    line-height: 1.5em;
 
     input {
       width: 20%;
@@ -40,9 +40,9 @@
   &__overlay {
     position: fixed;
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
-    background-color: rgba(192, 192, 192, 0.7);
+    background-color: rgb(192 192 192 / 70%);
   }
 }

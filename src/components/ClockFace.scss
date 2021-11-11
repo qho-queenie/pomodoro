@@ -5,13 +5,13 @@
 
   &__timer {
     position: absolute;
-    left: 115px;
     bottom: 125px;
+    left: 115px;
   }
 
   &__start-button {
     &.isActive {
-      background-color: #ff6347;
+      background-color: #6347;
     }
   }
 }
