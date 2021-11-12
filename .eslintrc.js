@@ -9,6 +9,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
+    "plugin:jsx-a11y/recommended",
     'airbnb',
   ],
   'globals': {
@@ -25,8 +26,14 @@ module.exports = {
   'plugins': [
     'react',
     'react-hooks',
+    "jsx-a11y",
   ],
   'rules': {
+    "react/jsx-sort-props": [1, {
+      "callbacksLast": true,
+      "shorthandFirst": true,
+      "noSortAlphabetically": false,
+    }],
   },
   'settings': {
     'react': {

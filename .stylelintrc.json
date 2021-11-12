@@ -10,5 +10,9 @@
 	"rules": {
 		"selector-class-pattern": null,
 		"selector-id-pattern": null
-	}
+	},
+	"ignoreFiles": [
+		".eslintrc.js", 
+		"**/*.js"
+	]
 }
