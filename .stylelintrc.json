@@ -9,7 +9,8 @@
 	],
 	"rules": {
 		"selector-class-pattern": null,
-		"selector-id-pattern": null
+		"selector-id-pattern": null,
+		"custom-property-no-missing-var-function": null
 	},
 	"ignoreFiles": [
 		".eslintrc.js", 

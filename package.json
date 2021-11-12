@@ -44,7 +44,7 @@
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.26.1",
-    "stylelint": "^8.0.0",
+    "stylelint": "^14.0.1",
     "stylelint-config-idiomatic-order": "^8.1.0",
     "stylelint-config-recommended": "^6.0.0",
     "stylelint-config-recommended-scss": "^5.0.1",
