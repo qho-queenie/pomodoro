@@ -12,10 +12,8 @@ const ClockFace = (props) => {
   const [isActive, setIsActive] = useState(false);
   const [currentSessionIndex, setCurrentSessionIndex] = useState(0);
   const [currentSeconds, setCurrentSeconds] = useState(sessions[0]);
-
   const [totalSeconds, setTotalSeconds] = useState(currentSeconds);
   const timeProgress = (currentSeconds / totalSeconds) * 100;
-
   const { children } = props;
 
   const settingsModalValues = {
