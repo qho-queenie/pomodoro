@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { CircularProgressBar } from './CircularProgressBar';
+import { formattedMinutes } from '../utils/formatTime';
 import './ClockFace.scss';
 
 export const ModalContext = createContext();
@@ -62,8 +63,7 @@ const ClockFace = (props) => {
     }
   }, [isModalOpen]);
 
-  const workOrBreak = (currentSessionIndex % 2) === 0 ? 'Pomodoro' : 'Break';
-  const formattedMinutes = Math.floor(currentSeconds / 60);
+  const workOrBreakLabel = (currentSessionIndex % 2) === 0 ? 'Pomodoro' : 'Break';
   const formattedSeconds = currentSeconds % 60;
 
   return (
@@ -71,7 +71,7 @@ const ClockFace = (props) => {
       <div className="ClockFace__info">
         <h3>I am a Pomodoro Timer</h3>
         <h4>
-          {workOrBreak}
+          {workOrBreakLabel}
         </h4>
         <CircularProgressBar
           name="CircularProgressBar__time-progress"
@@ -83,7 +83,7 @@ const ClockFace = (props) => {
           className={classnames('ClockFace__timer', { isActive })}
         >
           00 :
-          {formattedMinutes < 10 ? `0${formattedMinutes}` : formattedMinutes}
+          {formattedMinutes(currentSeconds) < 10 ? `0${formattedMinutes(currentSeconds)}` : formattedMinutes(currentSeconds)}
           {' '}
           :
           {formattedSeconds < 10 ? `0${formattedSeconds}` : formattedSeconds}

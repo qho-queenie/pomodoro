@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { ModalContext } from './ClockFace';
+import { formattedMinutes } from '../utils/formatTime';
 import './SettingsModal.scss';
 
 const SettingsModal = () => {
@@ -49,8 +50,6 @@ const SettingsModal = () => {
     return null;
   };
 
-  const formatToMinutes = (seconds) => Math.floor(seconds / 60);
-
   return (
     <div className="SettingsModal__overlay">
       <div className="SettingsModal">
@@ -63,7 +62,7 @@ const SettingsModal = () => {
               min="1"
               name="longSession"
               type="number"
-              value={formatToMinutes(localSessions[0])}
+              value={formattedMinutes(localSessions[0])}
               onChange={(e) => handleInputChange(e)}
             />
           </label>
@@ -75,7 +74,7 @@ const SettingsModal = () => {
               min="1"
               name="shortSession"
               type="number"
-              value={formatToMinutes(localSessions[1])}
+              value={formattedMinutes(localSessions[1])}
               onChange={(e) => handleInputChange(e)}
             />
           </label>
