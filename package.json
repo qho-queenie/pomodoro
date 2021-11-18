@@ -7,26 +7,25 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "classnames": "^2.3.1",
+    "postcss": "^8.3.11",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "sass": "^1.43.4",
+    "stylelint-config-airbnb": "0.0.0",
+    "stylelint-scss": "^1.2.1",
+    "typescript": "^4.4.4",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "jsx-quotes": ["error", "prefer-double"]
-    }
+    "eject": "react-scripts eject",
+    "lint": "eslint 'src/**/*.js'",
+    "lint-fix": "npm run lint -- --fix",
+    "lint:js": "eslint . --ext .js"
   },
   "browserslist": {
     "production": [
@@ -39,5 +38,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.26.1",
+    "stylelint": "^14.0.1",
+    "stylelint-config-idiomatic-order": "^8.1.0",
+    "stylelint-config-recommended": "^6.0.0",
+    "stylelint-config-recommended-scss": "^5.0.1",
+    "stylelint-config-standard": "^23.0.0",
+    "stylelint-config-standard-scss": "^2.0.1",
+    "stylelint-order": "^0.7.0"
   }
 }

@@ -1,7 +1,17 @@
 .ClockFace {
+  &__info {
+    position: relative;
+  }
+
+  &__timer {
+    position: absolute;
+    bottom: 125px;
+    left: 115px;
+  }
+
   &__start-button {
     &.isActive {
-      background-color: #ff6347;
+      background-color: #6347;
     }
   }
 }

@@ -1,20 +1,25 @@
-import React, { useState, useEffect, createContext } from "react";
-import classnames from "classnames";
-import SettingsModal from "./SettingsModal";
-import "./ClockFace.scss";
+import React, { useState, useEffect, createContext } from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { CircularProgressBar } from './CircularProgressBar';
+import { formattedMinutes } from '../utils/formatTime';
+import './ClockFace.scss';
 
 export const ModalContext = createContext();
 
-const ClockFace = () => {
+const ClockFace = (props) => {
   const [sessions, setSessions] = useState([1500, 300, 1500, 300]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [currentSessionIndex, setCurrentSessionIndex] = useState(0);
   const [currentSeconds, setCurrentSeconds] = useState(sessions[0]);
+  const [totalSeconds, setTotalSeconds] = useState(currentSeconds);
+  const timeProgress = (currentSeconds / totalSeconds) * 100;
+  const { children } = props;
 
   const settingsModalValues = {
-    isModalOpen, setIsModalOpen, sessions, setSessions
-  }
+    isModalOpen, setIsModalOpen, sessions, setSessions,
+  };
 
   useEffect(() => {
     let timeInterval;
@@ -29,23 +34,27 @@ const ClockFace = () => {
           } else {
             setCurrentSessionIndex(currentSessionIndex + 1);
           }
-          setCurrentSeconds(sessions[currentSessionIndex])
+          setCurrentSeconds(sessions[currentSessionIndex]);
           clearInterval(timeInterval);
         }
-      }, 1000)
+      }, 1000);
     } else if (!isActive) {
-      clearInterval(timeInterval)
+      clearInterval(timeInterval);
     }
-    return () => clearInterval(timeInterval)
+    return () => clearInterval(timeInterval);
   }, [isActive, currentSeconds, currentSessionIndex, sessions]);
 
   useEffect(() => {
-    setCurrentSeconds(sessions[currentSessionIndex])
+    setCurrentSeconds(sessions[currentSessionIndex]);
   }, [sessions, currentSessionIndex]);
 
   useEffect(() => {
-    setCurrentSessionIndex(0)
-    setCurrentSeconds(sessions[0])
+    setTotalSeconds(sessions[currentSessionIndex]);
+  }, [currentSessionIndex, sessions, currentSeconds]);
+
+  useEffect(() => {
+    setCurrentSessionIndex(0);
+    setCurrentSeconds(sessions[0]);
   }, [sessions]);
 
   useEffect(() => {
@@ -54,44 +63,62 @@ const ClockFace = () => {
     }
   }, [isModalOpen]);
 
-  const formattedMinutes = Math.floor(currentSeconds / 60);
+  const workOrBreakLabel = (currentSessionIndex % 2) === 0 ? 'Pomodoro' : 'Break';
   const formattedSeconds = currentSeconds % 60;
 
   return (
     <div className="ClockFace">
       <div className="ClockFace__info">
         <h3>I am a Pomodoro Timer</h3>
-        <h4>Current Session: {currentSessionIndex + 1}</h4>
+        <h4>
+          {workOrBreakLabel}
+        </h4>
+        <CircularProgressBar
+          name="CircularProgressBar__time-progress"
+          progress={timeProgress}
+          radius={170}
+          stroke={12}
+        />
         <h4
-          className={classnames("timer", { isActive })}
+          className={classnames('ClockFace__timer', { isActive })}
         >
           00 :
-          {formattedMinutes < 10 ? `0${formattedMinutes}` : formattedMinutes} :
+          {formattedMinutes(currentSeconds) < 10 ? `0${formattedMinutes(currentSeconds)}` : formattedMinutes(currentSeconds)}
+          {' '}
+          :
           {formattedSeconds < 10 ? `0${formattedSeconds}` : formattedSeconds}
         </h4>
       </div>
 
       <div className="ClockFace__controls">
         <button
-          className={classnames("ClockFace__start-button", { isActive })}
+          className={classnames('ClockFace__start-button', { isActive })}
+          type="button"
           onClick={() => setIsActive(!isActive)}
         >
-          {isActive ? "pause" : "start"}
+          {isActive ? 'pause' : 'start'}
         </button>
 
         <button
           className="ClockFace__open-settings-button"
+          type="button"
           onClick={() => setIsModalOpen(true)}
         >
           open settings
         </button>
 
-        <ModalContext.Provider value={settingsModalValues}>
-          <SettingsModal />
-        </ModalContext.Provider>
+        <div>
+          <ModalContext.Provider value={settingsModalValues}>
+            {children}
+          </ModalContext.Provider>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
+
+ClockFace.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ClockFace;

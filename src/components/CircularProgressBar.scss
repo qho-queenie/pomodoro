@@ -1,0 +1,13 @@
+.CircularProgressBar {
+  &__time-progress {
+    fill: transparent;
+    stroke: #ff6347;
+
+    circle {
+      position: absolute;
+      transform: rotate(-90deg);
+      transform-origin: center;
+      transition: stroke-dashoffset 0.35s;
+    }
+  }
+}
